@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-'''A class to manage the API authentication'''
+'''Import request and List'''
 from flask import request
 from typing import List
 
 
 class Auth:
+    '''Class for managing API authentication'''
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         '''Check if the authentication is required for the given path.'''
         return False
-
-        return True
 
     def authorization_header(self, request=None) -> str:
         '''Get the authorization header from the request'''
