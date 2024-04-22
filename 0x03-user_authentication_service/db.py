@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 '''DB module'''
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from sqlalchemy.exc import IntegrityError
 
 from user import Base, User
 
@@ -34,9 +32,5 @@ class DB:
         '''Add a new user to the database'''
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
-        try:
-            self._session.commit()
-        except IntegrityError:
-            self._session.rollback()
-            raise ValueError('User with this email already exists')
+        self._session.commit()
         return user
