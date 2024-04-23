@@ -47,3 +47,15 @@ class DB:
         except InvalidRequestError as e:
             self._session.rollback()
             raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        '''Update a user's attributes by user ID'''
+        user = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if hasattr(user, key):
+                setattr(user, key, value)
+            else:
+                raise ValueError(f"Invalid attribute: {key}")
+
+        self._session.commit()
